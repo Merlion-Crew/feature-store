@@ -1,0 +1,18 @@
+channels:
+- conda-forge
+
+dependencies:
+- python=3.8.5
+- pip<=20.1
+
+- pip:
+  - azureml-defaults==1.35.0
+  - mlflow
+  - cloudpickle==2.0.0
+  - feast==0.18.1
+  - feast-azure-provider==0.3.0
+  - snowflake-connector-python
+  - pyarrow==6.0.1
+  - lightgbm==3.3.2
+  - pandas
+  - redis==4.2.2
