@@ -42,10 +42,7 @@ The repository includes:
 - How to build and run the Credit-Risk-Model use case workflows? [workflow guide](./docs/workflows/)
 - How to sync your features between offline (snowflake) and online store (redis)? [Feature Materialization](./docs/materialization.md)
 - Inner loop/EDA - [Notebooks](./notebooks/)
-- Design Docs:
-    - [Repository Structure with Feature Stores]()
-    - [Unit Testing with Feature Stores]()
-    - [Azure ML Compute Tradeoff](./docs/training-compute-tradeoffs.md)
+- [Azure ML Compute Tradeoff](./docs/training-compute-tradeoffs.md)
 
 ### Repository Structure
 
