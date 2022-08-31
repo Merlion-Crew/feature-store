@@ -1,0 +1,26 @@
+image: python:latest
+stages:
+  - feature_registration
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq unixodbc unixodbc-dev
+  - pip install -r feature_repo/requirements.txt
+
+register features to blob:
+  environment: dev
+  stage: feature_registration
+  script:
+       - echo "Install Azure CLI...."
+       - apt update
+       - apt-get install sudo -y
+       - "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
+       - az --version
+       - echo "Login to Azure....."
+       - az login --identity --username $CONTOSO_AML_MANAGED_IDENTITY
+       - echo "Set Environment Variables for Feature Store Configuration....."
+       - export KEY_VAULT_NAME=$CONTOSO_KEYVAULT_NAME
+       - export USER_MSI_CLIENT_ID=$CONTOSO_USER_MSI_CLIENT_ID
+       - echo "Register Features......"
+       - python feature_repo/scripts/feature_definitions.py
+  tags:
+    - gitlab-runner1
