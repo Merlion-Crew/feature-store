@@ -52,7 +52,7 @@ The repository includes:
 - Logic Code:
     - Feature Store Configuration - [config](./feature_repo/dev/feature_store.yaml)
     - Feature Definition - [feature_repo](./feature_repo/scripts/feature_definitions.py)
-    - Feature Materialization - [materialize](./scripts/airflow_materialize/materialization.py)
+    - Feature Materialization - [materialize](./feature_repo/scripts/materialization.py)
     - Model Training and Registration - [model train](./risk_model/)
     - Model Deployment - [model deploy](./risk_model/)
 - Pipelines
