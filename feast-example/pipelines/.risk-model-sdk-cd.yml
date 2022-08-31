@@ -1,0 +1,35 @@
+image: python:latest
+
+variables:
+  WS_SUBSCRIPTION_ID: $CONTOSO_SUBSCRIPTION
+  WS_RESOURCE_GROUP: $CONTOSO_RESOURCE_GROUP
+  WS_NAME: $CONTOSO_WORKSPACE_NAME
+  AKS_INFERENCE_NAME: "aks-score"
+  MODEL_NAME: "lgbm_home_credit"
+  MODEL_VERSION: 10
+  SERVICE_NAME: "credit-risk-service"
+
+
+stages:
+  - deploy
+
+before_script:
+  - pip install -r config/aml_requirements.txt
+
+deploy model:
+  environment: dev
+  stage: deploy
+  script:
+      - apt update
+      - apt-get install sudo -y
+      - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - az --version
+      - echo "Installing Azure ML Cli (v1)"
+      - az extension add -n azure-cli-ml -y
+      - echo "Login to Azure....."
+      - az login --identity --username $CONTOSO_AML_MANAGED_IDENTITY
+      - az ml folder attach -w ${WS_NAME} -g ${WS_RESOURCE_GROUP}
+      - python risk_model/deploy_aml.py
+  tags:
+    - gitlab-runner1
+
