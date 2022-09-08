@@ -1,0 +1,36 @@
+image: python:latest
+
+variables:
+  AKS_RESOURCE_ID: "/subscriptions/f65f32ad-c665-4dba-b2fa-c859b11fc878/resourcegroups/contoso-msft-rg1/providers/Microsoft.ContainerService/managedClusters/aks-amlcompute1"
+  AML_COMPUTE_NAME: "aks-train1"
+
+stages:
+  - attach_ml_compute
+
+Attach AKS cluster in AML Workspace:
+  environment: dev
+  stage: attach_ml_compute
+  script:
+       - echo "Install Azure CLI...."
+       - apt update
+       - apt-get install sudo -y
+       - "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
+       - az --version
+       - echo "Install Azure ML Extension...."
+       - az extension add -n azure-cli-ml
+       - echo "Login to Azure....."
+       - az login --identity --username $CONTOSO_AML_MANAGED_IDENTITY
+       - echo "Attach AKS cluster as training compute target in the AML Workspace......"
+       - az ml computetarget attach kubernetes -n ${AML_COMPUTE_NAME} -i ${AKS_RESOURCE_ID} -g $CONTOSO_RESOURCE_GROUP -w $CONTOSO_WORKSPACE_NAME
+       - STATUS=$(az ml computetarget show -n ${AML_COMPUTE_NAME} -w $CONTOSO_WORKSPACE_NAME -g $CONTOSO_RESOURCE_GROUP --query provisioningState)
+       - |
+        while [ $STATUS = "Creating" ]
+          do
+            sleep 2
+            STATUS=$(az ml computetarget show -n ${AML_COMPUTE_NAME} -w $CONTOSO_WORKSPACE_NAME -g $CONTOSO_RESOURCE_GROUP --query provisioningState)
+            echo Status $STATUS
+          done
+
+  tags:
+    - gitlab-runner1
+

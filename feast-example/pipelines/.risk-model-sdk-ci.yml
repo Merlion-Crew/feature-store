@@ -1,0 +1,36 @@
+image: python:latest
+
+variables:
+  AKS_RESOURCE_ID: $CONTOSO_AKS_RESOURCE_ID
+  WS_SUBSCRIPTION_ID: $CONTOSO_SUBSCRIPTION
+  WS_RESOURCE_GROUP: $CONTOSO_RESOURCE_GROUP
+  WS_NAME: $CONTOSO_WORKSPACE_NAME
+  AML_COMPUTE_NAME: "aks-train1"
+  AML_EXPERIMENT_NAME: "credit_risk_train"
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq unixodbc unixodbc-dev
+  - pip install -r config/aml_requirements.txt
+
+stages:
+  - train_register
+
+Train Risk Model:
+  environment: dev
+  stage: train_register
+  script:
+       - echo "Install Azure CLI...."
+       - apt update
+       - apt-get install sudo -y
+       - "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
+       - az --version
+       - echo "Install Azure ML Extension...."
+       - az extension add -n azure-cli-ml
+       - echo "Login to Azure....."
+       - az login --identity --username $CONTOSO_AML_MANAGED_IDENTITY
+       - az ml folder attach -w ${WS_NAME} -g ${WS_RESOURCE_GROUP}
+       - echo "Run the Azure ML Training Job on AKS"
+       - python risk_model/train_aml.py
+
+  tags:
+    - gitlab-runner1
