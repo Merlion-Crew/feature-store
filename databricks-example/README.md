@@ -6,7 +6,7 @@ Open this notebook in the databricks workspace.
 
 ## Setup
 1. Upload the csv files to the databricks workspace
-    1. Download the `Home Credit Default Risk` data from [Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data) and store it in the `notebooks/data` folder.
+    1. Download the `Home Credit Default Risk` data from [Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data) and store it in the `data` folder.
     1. Split the `installments_payments.csv` into two - if you would encounter a databricks upload limit.
         1. Execute `./scripts/split_installments_payments.py`, this would create two `csv`'s, the `installments_payments0.csv` and `installments_payments1.csv`.
     1. Create databricks workspace in Azure portal.

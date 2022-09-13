@@ -3,7 +3,7 @@
 These notebooks are conversions from the `feast` implementation to `feathr` implemenation - the `feast` implmenation was created by our client as an exercise to explore `feast` capabilities. 
 
 The following to note:
-1. Has 3 Notedbooks
+1. 3 Notebooks
     1. `burea_bureau-balance.ipynb` - this notebook has two datasource, the `bureau.csv` and `bureau_balance.csv` which were then merged using a pre-created(manually created - see `scripts/add_time_to_csv.py` file to generate) a spine dataset.
     1. `installment-payments_credit_card_balance.ipynb` - this notebook has two datasource, the `installments_payments.csv` and `credit_card_balance.csv` which were then merged using `installments_payments.csv` as a spine dataset.
     1. `static_features.ipynb` - this notebook has only one datasource - a pass through, from the `application_train.csv`
@@ -11,14 +11,23 @@ The following to note:
 
 
 ## Setup
-1. Provisioning - refer to the main `README.md` file
+1. Provisioning:
+    1. Run `scripts/azure_resource_provision.sh`
+        1. Make sure to change the `<SUBCRIPTION_ID>` and set `<RESOUCE_PREFFIX>` fields
+        1. Please take note of the output, it would be needed to run the notebook
+    1. Environment variables on the notebooks
+        1. Make sure to change this cell with the correct values
+            - os.environ['REDIS_PASSWORD'] = ''
+            - os.environ['AZURE_CLIENT_ID'] = ''
+            - os.environ['AZURE_TENANT_ID'] = '' 
+            - os.environ['AZURE_CLIENT_SECRET'] = ''
 1. Upload the csv files to the storage
-    1. Download the `Home Credit Default Risk` data from [Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data) and store it in the `notebooks/data` folder.
+    1. Download the `Home Credit Default Risk` data from [Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data) and store it in the `data` folder.
     1. Create the `csv` for the `bureau` and `bureau_balance` spine dataset.
         1. Run the `scripts/add_time_to_csv.py` to generate the `bureau_all_time.csv`.
     1. Run the `scripts/upload_home_credit_data.sh` to upload it to the provisioned storage.
         1. Make sure to substitute the values
-        1. This script would upload all of the `csv` file inside the `notebooks/data` folder.
+        1. This script would upload all of the `csv` file inside the `data` folder.
 1. Update the python libraries of `Azure Synapse`
     1. Go to the provisioned `Azure Synapse`
     1. Click the `Apache Spark pools` of `Analytic pools` (left pane) and select the `Spark` pool to update.
