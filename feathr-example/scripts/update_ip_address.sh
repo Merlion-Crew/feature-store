@@ -1,11 +1,11 @@
 #!/bin/bash          
 
 # Fill in details in this section
-subscription_id="<SUBCRIPTION_ID>"
+subscription_id="<SUBSCRIPTION_ID>"
 resource_prefix="<RESOURCE_PREFIX>"
-synapse_sql_admin_name="cliuser1"
+synapse_sql_admin_name="<SQL_ADMIN_NAME>"
 synapse_sql_admin_password="<PASSWORD>"
-synapse_sparkpool_name="spark31"
+synapse_sparkpool_name="<SPARKPOOL_NAME>"
 
 # You don't have to modify the names below
 service_principal_name="$resource_prefix"sp

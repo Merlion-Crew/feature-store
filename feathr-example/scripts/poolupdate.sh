@@ -1,8 +1,8 @@
-subscription_id="<SUBCRIPTION_ID>"
+subscription_id="<SUBSCRIPTION_ID>"
 resource_prefix="<RESOURCE_PREFIX>"
-synapse_sql_admin_name="cliuser1"
+synapse_sql_admin_name="<SQL_ADMIN_NAME>"
 synapse_sql_admin_password="<PASSWORD>"
-synapse_sparkpool_name="spark31"
+synapse_sparkpool_name="<SPARKPOOL_NAME>"
 
 resoruce_group_name="$resource_prefix"rg
 

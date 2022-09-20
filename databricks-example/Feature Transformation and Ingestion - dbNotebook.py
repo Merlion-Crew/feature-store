@@ -216,13 +216,13 @@ bureau_features['CREATED_TIMESTAMP']=datetime.datetime.now()
 # MAGIC %md
 # MAGIC ## 3 Previous loan feature view
 # MAGIC 
-# MAGIC #### a. Installments_payments.csv
+# MAGIC #### a. Instalments_payments.csv
 # MAGIC The following features are created and used from installments_payments.csv:
-# MAGIC   - percentage of missed installments payments
+# MAGIC   - percentage of missed instalments payments
 # MAGIC   - Average percentage of unpaid payments for each missed payment
 # MAGIC   - Average of unpaid payments for each missed payment
 # MAGIC 
-# MAGIC #### Feature Creation: Installment Payments Features
+# MAGIC #### Feature Creation: Instalment Payments Features
 
 # COMMAND ----------
 
@@ -245,9 +245,9 @@ def aggAvgInstalments(df):
     final_df = final_df.join(avg_unpaid,on="SK_ID_CURR")
     return final_df
 
-pd_installment_payments_features=aggAvgInstalments(installments_payments).drop_duplicates()
+pd_instalment_payments_features=aggAvgInstalments(installments_payments).drop_duplicates()
 
-installment_payments_features = spark.createDataFrame(pd_installment_payments_features).select('INSTALMENT_MISSED').distinct()
+instalment_payments_features = spark.createDataFrame(pd_instalment_payments_features).select('INSTALMENT_MISSED').distinct()
 
 # COMMAND ----------
 
@@ -304,7 +304,7 @@ credit_card_balance_features = spark.createDataFrame(pd_credit_card_balance_feat
 
 # COMMAND ----------
 
-prev_loan_features = pd_installment_payments_features.join(pd_credit_card_balance_features,on="SK_ID_CURR").reset_index()
+prev_loan_features = pd_instalment_payments_features.join(pd_credit_card_balance_features,on="SK_ID_CURR").reset_index()
 prev_loan_features = prev_loan_features.fillna(0)
 prev_loan_features['EVENT_TIMESTAMP']=datetime.datetime(2022,2,24)
 prev_loan_features['CREATED_TIMESTAMP']=datetime.datetime.now()
@@ -336,10 +336,10 @@ fs = feature_store.FeatureStoreClient()
 spark.conf.set("spark.sql.shuffle.partitions", "5")
 
 fs.create_table(
-    name="feature_store_home_credit_bureau_data.installment_payments_features",
+    name="feature_store_home_credit_bureau_data.instalment_payments_features",
     primary_keys=["INSTALMENT_MISSED"],
-    df=installment_payments_features,
-    description="Installment Payments Features",
+    df=instalment_payments_features,
+    description="Instalment Payments Features",
 )
 
 fs.create_table(
@@ -426,15 +426,15 @@ fs.create_table(
 from databricks.feature_store import FeatureLookup
 import mlflow
 
-installment_payments_features_table = "feature_store_home_credit_bureau_data.installment_payments_features"
+instalment_payments_features_table = "feature_store_home_credit_bureau_data.instalment_payments_features"
 bureau_balance_rolling_features_table = "feature_store_home_credit_bureau_data.bureau_balance_rolling_features"
 agg_avg_bureau_features_table = "feature_store_home_credit_bureau_data.agg_avg_bureau_features"
 bureau_feature_table = "feature_store_home_credit_bureau_data.bureau_feature_table"
 prev_loan_features = "feature_store_home_credit_bureau_data.prev_loan_features"
 
-installment_payments_feature_lookups = [
+instalment_payments_feature_lookups = [
     FeatureLookup( 
-      table_name = installment_payments_features_table,
+      table_name = instalment_payments_features_table,
       feature_names = "INSTALMENT_MISSED",
       lookup_key = ["INSTALMENT_MISSED"],
     )
@@ -494,7 +494,7 @@ online_store = AzureSqlServerSpec(
 )
 
 fs.publish_table(
-  name='feature_store_home_credit_bureau_data.installment_payments_features',
+  name='feature_store_home_credit_bureau_data.instalment_payments_features',
   online_store=online_store,
   mode='overwrite'
 )
