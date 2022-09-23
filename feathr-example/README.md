@@ -37,7 +37,7 @@ The following to note:
 ## Notes on the notebooks
 1. These notebooks only utilized the `pre-processing` feature of `feathr`.
 1. There are several gotchas on these notebooks:
-    1. If anchors have an aggregated feature and an on-the-fly column features, the anchors should bdefinition should have separate datasource - eventhough they are pointing to the same csv.
+    1. If anchors have an aggregated feature and an on-the-fly column features, the anchors should have separate datasource - even though they are pointing to the same csv.
     1. If anchors have pass-thru and a created on-the-fly column features, they could be on the same datasource.
     1. Can't mix a pass-thru and a window aggregated/transformed feature definition.
     1. Pre processing methods
