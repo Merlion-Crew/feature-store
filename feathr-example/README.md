@@ -1,10 +1,10 @@
 # Feathr Home credit default notebooks
 
-These notebooks are conversions from the `feast` implementation to `feathr` implementation that was created to explore the `feast` capabilities.
+These notebooks are conversions from the `feast` implementation to `feathr` implementation to explore `feathr's` capabilities.
 
 The following to note:
 1. 3 Notebooks
-    1. `burea_bureau-balance.ipynb` - this notebook has two datasource, the `bureau.csv` and `bureau_balance.csv` which were then mereded using `bureau.csv` as a spine dataset.
+    1. `burea_bureau-balance.ipynb` - this notebook has two datasource, the `bureau.csv` and `bureau_balance.csv` which were then merged using `bureau.csv` as a spine dataset.
     1. `instalment-payments_credit_card_balance.ipynb` - this notebook has two datasource, the `installments_payments.csv` and `credit_card_balance.csv` which were then merged using `installments_payments.csv` as a spine dataset.
     1. `static_features.ipynb` - this notebook has only one datasource - a pass through, from the `application_train.csv`
 1. These notebooks demonstrates the `pre-processing` feature of `feathr` only.
