@@ -12,14 +12,14 @@ The following to note:
 
 ## Setup
 1. Provisioning:
-    1. Run `scripts/azure_resource_provision.sh`
+    1. Run the [azure provisioning script](https://github.com/feathr-ai/feathr/blob/main/docs/how-to-guides/azure_resource_provision.sh) to bring up required resources in Azure
         1. Make sure to change the `<SUBCRIPTION_ID>` and set `<RESOUCE_PREFFIX>` fields
         1. Please take note of the output, it would be needed to run the notebook
     1. Environment variables on the notebooks
         1. Make sure to change this cell with the correct values
             - os.environ['REDIS_PASSWORD'] = ''
             - os.environ['AZURE_CLIENT_ID'] = ''
-            - os.environ['AZURE_TENANT_ID'] = '' 
+            - os.environ['AZURE_TENANT_ID'] = ''
             - os.environ['AZURE_CLIENT_SECRET'] = ''
 1. Upload the csv files to the storage
     1. Download the `Home Credit Default Risk` data from [Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data) and store it in the `data` folder.
@@ -46,10 +46,10 @@ The following to note:
         1. Can't do method chaining (calling another method) inside the pre processing method. To overcome this limitation, a nested function is used (function within a function). So the `feathr` spark job could execute the pre processing method, then this method would in turn call other methods that is inside the preprocessing methods.
             ``` python
             def bureau_preprocessing(df: DataFrame) -> DataFrame:
-                
+
                 def bureauBalanceRollingCreditLoan(df):
                     PASS
-                
+
                 df = bureauBalanceRollingCreditLoan(df)
                 return df
             ```
@@ -63,7 +63,7 @@ The following to note:
 
                 def bureauBalanceRollingCreditLoan(df):
                     PASS
-                
+
                 df = bureauBalanceRollingCreditLoan(df)
                 return df
             ```
